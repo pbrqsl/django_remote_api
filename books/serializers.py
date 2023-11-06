@@ -6,7 +6,7 @@ from collections import OrderedDict
 class BookSerializer(serializers.ModelSerializer):
     class Meta:
         model = Book
-        fields = '__all__'
+        fields = "__all__"
 
     def to_representation(self, instance):
         ret = super().to_representation(instance)
