@@ -25,7 +25,7 @@ def pull_books(request):
         average_rating = book["volumeInfo"].get("averageRating")
         ratings_count = book["volumeInfo"].get("ratingsCount")
 
-        print(Book.objects.filter(title=title))
+        #print(Book.objects.filter(title=title))
 
         if not Book.objects.filter(title=title):
             print("---------ADDING BOOK-------------")
