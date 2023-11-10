@@ -1,3 +1,4 @@
+from collections.abc import Iterable
 from django.db import models
 from django.contrib.postgres.fields import ArrayField
 
@@ -15,6 +16,10 @@ class Book(models.Model):
     thumbnail = models.URLField(null=True)
     average_rating = models.DecimalField(decimal_places=2, max_digits=4, null=True)
     ratings_count = models.IntegerField(null=True)
+
+    def save(self, *args, **kwargs):
+        if not Book.objects.filter(title=self.title):
+            super().save(*args, **kwargs)
 
 
 # "categories": [
