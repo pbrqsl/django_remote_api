@@ -7,6 +7,8 @@ from books.models import Book
 from db.serializers import BookToDbSerializer
 import json
 from rest_framework.viewsets import generics
+from db.tools import normalize_date
+
 
 class PullBooksApiView(generics.CreateAPIView):
     def post(self, request, *args, **kwargs):
@@ -18,8 +20,6 @@ class PullBooksApiView(generics.CreateAPIView):
         books = response.json()["items"]
         serialized_books_out = BookToDbSerializer(books, many=True)
         serialized_books_in = BookSerializer(data=serialized_books_out.data, many=True)
-        print(serialized_books_in.is_valid())
-
         serialized_books_in.save()
         
         return Response({"message": "books_indexed"})

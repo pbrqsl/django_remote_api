@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from books.models import Book
+from db.tools import normalize_date
 
 
 
@@ -11,3 +11,11 @@ class BookToDbSerializer(serializers.Serializer):
     thumbnail = serializers.CharField(source='volumeInfo.imageLinks.thumbnail', required=False)
     average_rating = serializers.CharField(source='volumeInfo.averageRating', required=False)
     rating_count = serializers.CharField(source='volumeInfo.ratingCount', required=False)
+
+    def to_representation(self, instance):
+        representation = super().to_representation(instance)
+        if representation.get('published_date'):
+            representation['published_date'] = normalize_date(representation['published_date'])
+        
+        return representation
+    
